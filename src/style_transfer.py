@@ -23,10 +23,11 @@ def check_paths(args):
             os.makedirs(args.save_model_dir)
         if args.checkpoint_model_dir is not None and not (os.path.exists(args.checkpoint_model_dir)):
             os.makedirs(args.checkpoint_model_dir)
+        else :
+            os.makedirs(os.path.join(args.save_model_dir, "ckpt"))
     except OSError as e:
         print(e)
         sys.exit(1)
-
 
 def train(args):
     device = torch.device("cuda" if args.cuda else "cpu")
