@@ -43,6 +43,8 @@ def train(args):
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size)
 
     transformer = TransformerNet().to(device)
+    if (args.pretrained_model_ckpt is not None):
+        transformer.load_state_dict(torch.load(args.pretrained_model_ckpt)) 
     optimizer = Adam(transformer.parameters(), args.lr)
     mse_loss = torch.nn.MSELoss()
 
@@ -103,19 +105,19 @@ def train(args):
 
             if args.checkpoint_model_dir is not None and (batch_id + 1) % args.checkpoint_interval == 0:
                 transformer.eval().cpu()
-                ckpt_model_filename = "ckpt_epoch_" + str(e) + "_batch_id_" + str(batch_id + 1) + ".pth"
+                ckpt_model_filename = "ckpt_epoch_" + str(e + 1) + "_batch_id_" + str(batch_id + 1) + ".pth"
                 ckpt_model_path = os.path.join(args.checkpoint_model_dir, ckpt_model_filename)
                 torch.save(transformer.state_dict(), ckpt_model_path)
                 transformer.to(device).train()
 
-    # save model
-    transformer.eval().cpu()
-    save_model_filename = "epoch_" + str(args.epochs) + "_" + str(time.ctime()).replace(' ', '_') + "_" + str(
-        args.content_weight) + "_" + str(args.style_weight) + ".model"
-    save_model_path = os.path.join(args.save_model_dir, args.model_name, ".model")
-    torch.save(transformer.state_dict(), save_model_path)
+        # save model
+        transformer.eval().cpu()
+        save_model_filename = "epoch_" + str(args.epochs) + "_" + str(time.ctime()).replace(' ', '_') + "_" + str(
+            args.content_weight) + "_" + str(args.style_weight) + ".model"
+        save_model_path = args.save_model_dir + "/" args.model_name + ".model")
+        torch.save(transformer.state_dict(), save_model_path)
 
-    print("\nDone, trained model saved at", save_model_path)
+        print("\nModel saved at", save_model_path)
 
 
 def stylize(args):
@@ -175,13 +177,15 @@ def main():
     train_arg_parser = subparsers.add_parser("train", help="parser for training arguments")
     train_arg_parser.add_argument("--epochs", type=int, default=2,
                                   help="number of training epochs, default is 2")
-    train_arg_parser.add_argument("--batch-size", type=int, default=4,
-                                  help="batch size for training, default is 4")
+    train_arg_parser.add_argument("--batch-size", type=int, default=32,
+                                  help="batch size for training, default is 32")
     train_arg_parser.add_argument("--dataset", type=str, required=True,
                                   help="path to training dataset, the path should point to a folder "
                                        "containing another folder with all the training images")
     train_arg_parser.add_argument("--style-image", type=str, default="images/style-images/mosaic.jpg",
                                   help="path to style-image")
+    train_arg_parser.add_argument("--pretrained-model-ckpt", type=str, default=None,
+                                  help="Pre-trained checkpoint model to continue training.")
     train_arg_parser.add_argument("--save-model-dir", type=str, required=True,
                                   help="path to folder where trained model will be saved.")
     train_arg_parser.add_argument("--model-name", type=str, required=True,
