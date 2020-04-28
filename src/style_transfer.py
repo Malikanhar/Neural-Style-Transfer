@@ -181,7 +181,7 @@ def main():
     train_arg_parser.add_argument("--dataset", type=str, required=True,
                                   help="path to training dataset, the path should point to a folder "
                                        "containing another folder with all the training images")
-    train_arg_parser.add_argument("--style-image", type=str, default="images/style-images/mosaic.jpg",
+    train_arg_parser.add_argument("--style-image", type=str, required=True,
                                   help="path to style-image")
     train_arg_parser.add_argument("--pretrained-model", type=str, default=None,
                                   help="Pre-trained model to continue training.")
