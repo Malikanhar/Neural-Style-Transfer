@@ -3,7 +3,7 @@ Fast Image Stylization using Instance Normalization with Pytorch
 
 ## Start Training
 <pre>
-!python src/style_transfer.py train 
+python src/style_transfer.py train 
       --dataset train 
       --style-image style/mosaic.jpg 
       --save-model-dir save 
@@ -36,7 +36,7 @@ There are several other flags that you can use :
 
 ## Evaluate
 <pre>
-!python src/style_transfer.py eval 
+python src/style_transfer.py eval 
       --content-image image.jpg 
       --output-image image_mosaic.jpg
       --model save/mosaic.model 
@@ -49,3 +49,6 @@ Flag description :
 `--output-image` path for saving the output image  
 `--model` saved model to be used for styling the image  
 `--cuda` set it to 1 for running in GPU and 0 for CPU
+
+## Result
+![Result](https://github.com/Malikanhar/Neural-Style-Transfer/raw/master/assets/result.png)
