@@ -50,5 +50,8 @@ Flag description :
 `--model` saved model to be used for styling the image  
 `--cuda` set it to 1 for running in GPU and 0 for CPU
 
+## Demo
+The demo notebook are available in [Google Colab](https://colab.research.google.com/drive/1HUs96f9v04YF0gsBfF_XM1KMLNVz-HvS)
+
 ## Result
 ![Result](https://github.com/Malikanhar/Neural-Style-Transfer/raw/master/assets/result.png)
