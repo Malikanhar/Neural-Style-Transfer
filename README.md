@@ -55,3 +55,6 @@ The demo notebook are available in [Google Colab](https://colab.research.google.
 
 ## Result
 ![Result](https://github.com/Malikanhar/Neural-Style-Transfer/raw/master/assets/result.png)
+
+## Reference
+[Fast Neural style](https://github.com/pytorch/examples/tree/master/fast_neural_style)
